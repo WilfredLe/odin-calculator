@@ -54,8 +54,11 @@ body, button {
 }
 
 .main-display {
+    overflow: hidden;
     font-size: 40px;
     color: rgb(85, 84, 84);
+    width: 300px;
+    height: 100px;
 }
 
 .secondary-display {
