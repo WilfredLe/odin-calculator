@@ -55,15 +55,16 @@ body, button {
 
 .main-display {
     overflow: hidden;
-    font-size: 40px;
+    font-size: 50px;
     color: rgb(85, 84, 84);
     width: 300px;
     height: 100px;
 }
 
 .secondary-display {
-    font-size: 20px;
+    font-size: 30px;
     color: rgba(85, 84, 84, 0.5);;
+    height: 50px;
 }
 
 .buttons-container {
@@ -83,23 +84,18 @@ body, button {
     box-shadow: 1px 2px rgba(0, 0, 0, 0.336);
 }
 
-.misc-btn:active {
+button:active {
     background-color: #ffffb557;
     border: 3px #ffffb5af solid;
 }
 
-.main-btn {
+.main-btn, .equal-btn, .clear-btn {
     border-radius: 8px;
     box-shadow: 1px 2px rgba(0, 0, 0, 0.336);
     font-size: 30px;
     width: 60px;
     height: 60px;
     text-align: center;
-}
-
-.main-btn:active {
-    background-color: #ffffb557;
-    border: 10px #ffffb5af solid;
 }
 
 .zero-btn {
