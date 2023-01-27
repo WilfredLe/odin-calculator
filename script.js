@@ -5,8 +5,12 @@ const testerBtn = document.querySelector("#tester-btn")
 const mainBtns = document.querySelectorAll(".main-btn");
 const equalBtn = document.querySelector(".equal-btn");
 const clearBtn = document.querySelector(".clear-btn");
+const deleBtn = document.querySelector("#back-btn");
+const heartBtn = document.querySelector("#heart-btn");
+const decmBtn = document.querySelector(".decm-btn");
 let mainDisContent = [];
 let totalHolder = null;
+let decmBtnSwitch = true;
 
 //Functions
 const calc = {
@@ -17,8 +21,8 @@ const calc = {
     power(x,y) {return x**y},
     modul(x,y) {return x%y},
     funcSele(x,operator,y) {
-        let numX = parseInt(x);
-        let numY = parseInt(y);
+        let numX = parseFloat(parseFloat(x).toFixed(2));
+        let numY = parseFloat(parseFloat(y).toFixed(2));
         if(operator === "+") {return this.add(numX,numY)}
         else if(operator === "-") {return this.subtract(numX,numY)}
         else if(operator === "×") {return this.multiply(numX,numY)}
@@ -43,20 +47,33 @@ const calc = {
     btnFunc(elm) {
         elm.addEventListener('click',
             (e) => {
+                if(mainDisplay.classList.contains('heart')) {
+                    mainDisplay.classList.add('main-display');
+                    mainDisplay.classList.remove('heart');
+                    secondaryDisplay.classList.add('secondary-display');
+                    secondaryDisplay.classList.remove('heart');
+                    secondaryDisplay.innerText = ""
+                };
                 lastIndex = mainDisContent.length-1;
                 if(mainDisContent.length === 0) 
                     {mainDisContent.push(`${e.target.innerText}`)}
+                else if(mainDisContent.indexOf('.') !== -1) 
+                    {
+                        periodIndex = mainDisContent.indexOf('.');
+                        numIndex = periodIndex - 1;
+                        mainDisContent.pop();
+                        mainDisContent[numIndex] = parseFloat(`${mainDisContent[numIndex]}.${e.target.innerText}`);
+                    }
                 else if(!isNaN(parseInt(e.target.innerText)))
                     {
                         if(!isNaN(parseInt(mainDisContent[lastIndex]))) 
-                            {mainDisContent[lastIndex] = parseInt(`${mainDisContent[lastIndex]}${e.target.innerText}`)}
+                            {mainDisContent[lastIndex] = parseInt(`${mainDisContent[lastIndex]}${e.target.innerText}`); console.log('IT TRIGGERS')}
                         else 
                             {mainDisContent.push(`${e.target.innerText}`)}
                     }
                 else 
                     {mainDisContent.push(`${e.target.innerText}`)};
                 mainDisplay.innerText = mainDisContent.join('');
-                console.log(mainDisContent,parseInt(e.target.innerText),mainDisContent[lastIndex],lastIndex,!isNaN(parseInt(e.target.innerText)))
             }
         )
     },
@@ -74,9 +91,47 @@ const calc = {
                 mainDisplay.innerText = '';
                 secondaryDisplay.innerText = '';
                 mainDisContent = [];
+                totalHolder = null
             }
         )
-    }
+    },
+    deleteBtnFunc(deleBtn) {
+        deleBtn.addEventListener('click', () => {
+                lastIndex = mainDisContent.length-1;
+                if(mainDisContent.length === 0) {}
+                else if(mainDisContent[lastIndex].toString().length > 1) {
+                origNum = mainDisContent.pop().toString();
+                changedNum = origNum.split('');
+                changedNum.pop();
+                changedNum.join('');
+                mainDisContent.push(parseInt(changedNum));
+                }
+                else {mainDisContent.pop()}
+                mainDisplay.innerText = mainDisContent.join('')
+            }
+        )
+    },
+    heartBtnFunc(heartBtn) {
+        heartBtn.addEventListener('click', () => {
+                mainDisplay.innerText = "You are amazing and deserve all the boba in the world";
+                mainDisplay.classList.add('heart');
+                mainDisplay.classList.remove('main-display');
+                secondaryDisplay.innerText = "<3 <3 <3 <3 <3 <3 <3 <3 <3";
+                secondaryDisplay.classList.add('heart');
+                secondaryDisplay.classList.remove('secondary-display')
+            }
+        )
+    },
+    // decmBtnFunc(decmBtn) {
+    //     decmBtn.addEventListener('click', () => {
+    //         lastIndex = mainDisContent.length-1;
+    //         if(typeof mainDisContent[lastIndex] === 'number') {
+    //                mainDisContent.push('.');
+    //                mainDisplay.innerText = mainDisContent.join('')
+    //             }
+    //         }
+    //     )
+    // }
 }
 
 // testerBtn.addEventListener(click,
@@ -88,4 +143,6 @@ const calc = {
 
 mainBtns.forEach((btn) => calc.btnFunc(btn));
 calc.equalBtnFunc(equalBtn);
-calc.clearBtnFunc(clearBtn)
+calc.clearBtnFunc(clearBtn);
+calc.deleteBtnFunc(deleBtn);
+calc.heartBtnFunc(heartBtn);
