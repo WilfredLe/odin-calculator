@@ -7,10 +7,8 @@ const equalBtn = document.querySelector(".equal-btn");
 const clearBtn = document.querySelector(".clear-btn");
 const deleBtn = document.querySelector("#back-btn");
 const heartBtn = document.querySelector("#heart-btn");
-const decmBtn = document.querySelector(".decm-btn");
 let mainDisContent = [];
 let totalHolder = null;
-let decmBtnSwitch = true;
 
 //Functions
 const calc = {
@@ -67,7 +65,7 @@ const calc = {
                 else if(!isNaN(parseInt(e.target.innerText)))
                     {
                         if(!isNaN(parseInt(mainDisContent[lastIndex]))) 
-                            {mainDisContent[lastIndex] = parseInt(`${mainDisContent[lastIndex]}${e.target.innerText}`); console.log('IT TRIGGERS')}
+                            {mainDisContent[lastIndex] = parseFloat(`${mainDisContent[lastIndex]}${e.target.innerText}`); console.log('IT TRIGGERS')}
                         else 
                             {mainDisContent.push(`${e.target.innerText}`)}
                     }
@@ -121,25 +119,9 @@ const calc = {
                 secondaryDisplay.classList.remove('secondary-display')
             }
         )
-    },
-    // decmBtnFunc(decmBtn) {
-    //     decmBtn.addEventListener('click', () => {
-    //         lastIndex = mainDisContent.length-1;
-    //         if(typeof mainDisContent[lastIndex] === 'number') {
-    //                mainDisContent.push('.');
-    //                mainDisplay.innerText = mainDisContent.join('')
-    //             }
-    //         }
-    //     )
-    // }
+    }
 }
 
-// testerBtn.addEventListener(click,
-//     (e) => {
-//         // mainDisplay.textContent = this.
-//         console.log(e)
-//     }
-// )
 
 mainBtns.forEach((btn) => calc.btnFunc(btn));
 calc.equalBtnFunc(equalBtn);
