@@ -1,7 +1,6 @@
 //Variables
 const mainDisplay = document.querySelector(".main-display");
 const secondaryDisplay = document.querySelector(".secondary-display");
-const testerBtn = document.querySelector("#tester-btn")
 const mainBtns = document.querySelectorAll(".main-btn");
 const equalBtn = document.querySelector(".equal-btn");
 const clearBtn = document.querySelector(".clear-btn");
@@ -15,7 +14,7 @@ const calc = {
     add(x,y) {return x+y},
     subtract(x,y) {return x-y},
     multiply(x,y) {return x*y},
-    divide(x,y) {return x/y},
+    divide(x,y) {return parseFloat((x/y).toFixed(2))},
     power(x,y) {return x**y},
     modul(x,y) {return x%y},
     funcSele(x,operator,y) {
@@ -65,7 +64,7 @@ const calc = {
                 else if(!isNaN(parseInt(e.target.innerText)))
                     {
                         if(!isNaN(parseInt(mainDisContent[lastIndex]))) 
-                            {mainDisContent[lastIndex] = parseFloat(`${mainDisContent[lastIndex]}${e.target.innerText}`); console.log('IT TRIGGERS')}
+                            {mainDisContent[lastIndex] = parseFloat(`${mainDisContent[lastIndex]}${e.target.innerText}`)}
                         else 
                             {mainDisContent.push(`${e.target.innerText}`)}
                     }
@@ -105,7 +104,8 @@ const calc = {
                 mainDisContent.push(parseInt(changedNum));
                 }
                 else {mainDisContent.pop()}
-                mainDisplay.innerText = mainDisContent.join('')
+                mainDisplay.innerText = mainDisContent.join('');
+                totalHolder = mainDisContent[lastIndex]
             }
         )
     },
@@ -122,6 +122,23 @@ const calc = {
     }
 }
 
+window.addEventListener('keydown', (e) => {
+    let btn = '';
+    if(e.code === 'Equal') {
+        e.key === '+' ? btn = 'KeyPlus':btn = 'Equal'
+    }
+    else if(e.code === 'Digit5') {
+        e.key === '%' ? btn = "KeyPercent":btn = "Digit5"
+    }
+    else if(document.querySelector(`#${e.code}`) === null) {
+        return
+    }
+    else {btn = e.code};
+    if (document.querySelector(`#${e.code}`) === null) {
+        return
+    }
+    else {document.querySelector(`#${btn}`).click()}
+});
 
 mainBtns.forEach((btn) => calc.btnFunc(btn));
 calc.equalBtnFunc(equalBtn);
